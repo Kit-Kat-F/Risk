@@ -220,7 +220,7 @@ namespace Risk
         static bool Roll(int armytotalA, int armytotalD)
         {
             Random Rand = new Random();
-            int AttackTot = 0;
+            int AttackTot = 0; /// total score from dice rolled
             int DefenseTot = 0;
             if (armytotalA <= armytotalD)
             {
@@ -231,19 +231,15 @@ namespace Risk
                     if (AttackTot > DefenseTot)
                     {
                         armytotalD -= 1;
+                        if (armytotalD <= 0)
+                            return false;
                     }
                     else
                     {
                         armytotalA -= 1;
+                        if (armytotalA <= 0)
+                            return true;
                     }
-                }
-                if (armytotalA == 0)
-                {
-                    return true; /// true means Attacker wins false means attacker loses
-                }
-                else if (armytotalD == 0)
-                {
-                    return false;
                 }
             }
             else if (armytotalA > armytotalD)
@@ -255,7 +251,7 @@ namespace Risk
                         AttackTot = Rand.Next(1, 6) + Rand.Next(1, 6);
                         DefenseTot = Rand.Next(1, 6) + Rand.Next(1, 6);
                     }
-                    else if (armytotalA - armytotalD > 2)
+                    else if (armytotalA - armytotalD >= 2)
                     {
                         AttackTot = Rand.Next(1, 6) + Rand.Next(1, 6) + Rand.Next(1, 6);
                         DefenseTot = Rand.Next(1, 6) + Rand.Next(1, 6);
@@ -263,19 +259,15 @@ namespace Risk
                     if (AttackTot > DefenseTot)
                     {
                         armytotalD -= 1;
+                        if (armytotalD <= 0)
+                            return false;
                     }
                     else
                     {
                         armytotalA -= 1;
+                        if (armytotalA <= 0)
+                            return true;
                     }
-                }
-                if (armytotalA == 0)
-                {
-                    return true; /// true means Attacker wins false means attacker loses
-                }
-                else if (armytotalD == 0)
-                {
-                    return false;
                 }
             }
             return true;
@@ -542,15 +534,15 @@ namespace Risk
             {
                 if (firstbutt == true) /// first attack phase
                 {
-                    butt.BackColor = Color.Black; /// sets colour to show selected button
-                    butt.ForeColor = Color.White; /// Fix cos this doesn't change text colour
+
+                    butt.BackColor = Color.BurlyWood; /// sets colour to show selected button
 
                     Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
                     for (int i = 1; i < 43; i++)
                     {
                         string ButtonName = "C" + i.ToString();
                         bt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
-                        if (bt.BackColor == Color.Black)
+                        if (bt.BackColor == Color.BurlyWood)
                         {
                             butt1 = i;
                             break;
@@ -558,9 +550,9 @@ namespace Risk
                     } /// finds the selected button and saves as butt1
 
                     int opposing_player = button_player(butt1);
-
-                    Grey_Buttons(-1, ref Player_Countries, false, true);
-
+                    
+                    Grey_Buttons(1, ref Player_Countries, false, true);
+                    
                     for (int i = 0; i < 43; i++)
                     {
                         string b1 = "C" + i.ToString();
@@ -571,46 +563,32 @@ namespace Risk
                         }
                     } /// checks if player owns a neighbouring country
 
-                    ///bool is_next_to = false;
-                    ///for (int i = 0; i < Player_Countries[Player].Count(); i++)
-                    ///{
-                    ///    if (AdjacencyMatrix[butt1, Player_Countries[Player][i]] == true)
-                    ///    {
-                    ///        is_next_to = true;
-                    ///        break;
-                    ///    }
-                    ///} /// checks if player owns a neighbouring country
-                    ///
-                    ///if (is_next_to == true)
-                    ///{
-                    ///    firstbutt = false; /// allows entry to else statement now a valid country has been chosen to attack
-                    ///
-                    ///    Grey_Buttons(Player, ref Player_Countries, false, true);
-                    ///    for (int i = 1; i < 43; i++)
-                    ///    {
-                    ///        string b1 = "C" + i.ToString();
-                    ///        Button PlayersColor = this.Controls.Find(b1, true).FirstOrDefault() as Button;
-                    ///        if (AdjacencyMatrix[butt1, i] == true && PlayersColor.BackColor == Player_colour_from_number(Player))
-                    ///        {
-                    ///            Individual_Button_Grey(true, i);
-                    ///        }
-                    ///    } /// only allows the player to select neighbouring countries to use to attack the victim country
-                    ///}
-                    ///else
-                    ///{
-                    ///    Button_Colour(opposing_player, butt1);
-                    ///}
+                    firstbutt = false;
                 }
                 else /// second attack phase
                 {
                     string b1 = "C" + butt1.ToString();
                     Button Defending = this.Controls.Find(b1, true).FirstOrDefault() as Button;
-                    int armyd = Convert.ToInt32(Defending.Text);
-                    int armya = Convert.ToInt32(butt.Text);
+                    int armya = Convert.ToInt32(Defending.Text);
+                    int armyd = Convert.ToInt32(butt.Text);
                     bool roll_result = Roll(armya, armyd); /// true means attacker wins
                     if (roll_result == true)
                     {
-                        int opposing_player = button_player(butt1);
+                        ///vague outline:
+                        ///get current player colour
+                        ///get owner of dead tile
+                        ///remove tile from previous owner and give to current player
+                        ///call the colour set funciton to correct the colours
+                        Color Current_player_colour = Player_colour_from_number(Player);
+                        for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                        {
+                            string buttname = "C" + Player_Countries[Player][i].ToString();
+                            Button Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
+                            if (Player_Butt.BackColor == Color.BurlyWood)
+                            {
+                                Player_Butt.BackColor = Current_player_colour;
+                            }
+                        }
 
                     }
                     else
@@ -697,7 +675,16 @@ namespace Risk
             {
                 GameState.Text = "Attacking";
 
-
+                Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
+                for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                {
+                    string ButtonName = "C" + Player_Countries[Player][i].ToString();
+                    bt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
+                    if (bt.Text == "1")
+                    {
+                        Individual_Button_Grey(false, Player_Countries[Player][i]);
+                    }
+                }
 
                 ///List<int> current_countries = Player_Countries[Player];
                 ///Grey_Buttons(1, ref Player_Countries, true, true); /// makes all buttons enabled
