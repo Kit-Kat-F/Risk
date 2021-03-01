@@ -568,17 +568,19 @@ namespace Risk
                 else /// second attack phase
                 {
                     string b1 = "C" + butt1.ToString();
-                    Button Defending = this.Controls.Find(b1, true).FirstOrDefault() as Button;
-                    int armya = Convert.ToInt32(Defending.Text);
+                    Button Attacking = this.Controls.Find(b1, true).FirstOrDefault() as Button;
+                    int armya = Convert.ToInt32(Attacking.Text);
                     int armyd = Convert.ToInt32(butt.Text);
-                    bool roll_result = Roll(armya, armyd); /// true means attacker wins
+                    ///bool roll_result = Roll(armya, armyd); /// true means attacker wins (doesn't work)
+                    bool roll_result = true;
                     if (roll_result == true)
                     {
                         ///vague outline:
-                        ///get current player colour
-                        ///get owner of dead tile
-                        ///remove tile from previous owner and give to current player
-                        ///call the colour set funciton to correct the colours
+                        ///get current player colour DONE
+                        ///subtract lost units from winner somehow TODO
+                        ///get owner of dead tile DONE
+                        ///remove tile from previous owner and give to current player DONE
+                        ///call the colour set funciton to correct the colours DONE
                         Color Current_player_colour = Player_colour_from_number(Player);
                         for (int i = 0; i < Player_Countries[Player].Count(); i++)
                         {
@@ -590,14 +592,80 @@ namespace Risk
                             }
                         }
 
+                        string E_Button_Name = butt.Name;
+                        string E_Button_Number = "";
+                        for (int i = 1; i < E_Button_Name.Length; i++)
+                        {
+                            E_Button_Number += E_Button_Name[i];
+                        }
+                        int E_butt_val = Convert.ToInt32(E_Button_Number);
+                        Color E_Colour = butt.BackColor;
+                        int E_Num = Player_number_from_colour(E_Colour);
+                        Player_Countries[E_Num].Remove(E_butt_val);
+                        Player_Territory_Start(Player, E_butt_val, ref Player_Countries);
+
+
+
+                        /// add functionality to move troops when country is taken
+
+                        /// Reset to initial state so more tiles can be taken
+
+                        firstbutt = true;
+
+                        Grey_Buttons(1, ref Player_Countries, false, true);
+                        Grey_Buttons(Player, ref Player_Countries, true, false);
+
+                        Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
+                        for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                        {
+                            string ButtonName = "C" + Player_Countries[Player][i].ToString();
+                            bt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
+                            if (bt.Text == "1")
+                            {
+                                Individual_Button_Grey(false, Player_Countries[Player][i]);
+                            }
+                        }
+
                     }
-                    else
+                    else /// this means that if you fail a roll your turn ends, I'm not sure if I should keep this implementation or not.
                     {
                         butt.Text = "1";
+                        Grey_Buttons(1, ref Player_Countries, false, true);
+                        MessageBox.Show("Please enter the next round");
                     }
                 }
             }
         } /// Country tile click logic
+
+        private int Player_number_from_colour(Color Player_colour)
+        {
+            int player_num = -1;
+            if (Player_colour == Color.White)
+            {
+                player_num = 0;
+            }
+            if (Player_colour == Color.HotPink)
+            {
+                player_num = 1;
+            }
+            if (Player_colour == Color.Red)
+            {
+                player_num = 2;
+            }
+            if (Player_colour == Color.Green)
+            {
+                player_num = 3;
+            }
+            if (Player_colour == Color.Blue)
+            {
+                player_num = 4;
+            }
+            if (Player_colour == Color.Orange)
+            {
+                player_num = 5;
+            }
+            return player_num;
+        }
 
         private Color Player_colour_from_number(int player_num)
         {
