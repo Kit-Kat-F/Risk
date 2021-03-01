@@ -553,7 +553,7 @@ namespace Risk
                     
                     Grey_Buttons(1, ref Player_Countries, false, true);
                     
-                    for (int i = 0; i < 43; i++)
+                    for (int i = 1; i < 43; i++)
                     {
                         string b1 = "C" + i.ToString();
                         Button PlayersColor = this.Controls.Find(b1, true).FirstOrDefault() as Button;
