@@ -217,11 +217,25 @@ namespace Risk
             }
         }
 
-        static bool Roll(int armytotalA, int armytotalD)
+        struct bool_int
+        {
+            public bool win;
+            public int sub;
+        }
+
+
+        static bool_int Roll(int armytotalA, int armytotalD)
         {
             Random Rand = new Random();
             int AttackTot = 0; /// total score from dice rolled
             int DefenseTot = 0;
+            bool_int result1;
+            bool_int result2;
+            bool_int ResultDefault;
+            result1.sub = 0;
+            result2.sub = 0;
+            ResultDefault.win = true;
+            ResultDefault.sub = 0;
             if (armytotalA <= armytotalD)
             {
                 while (armytotalA != 0 || armytotalD != 0)
@@ -231,14 +245,22 @@ namespace Risk
                     if (AttackTot > DefenseTot)
                     {
                         armytotalD -= 1;
+                        result2.sub += 1;
                         if (armytotalD <= 0)
-                            return false;
+                        {
+                            result1.win = true;
+                            return result1;
+                        }
                     }
                     else
                     {
                         armytotalA -= 1;
+                        result1.sub += 1;
                         if (armytotalA <= 0)
-                            return true;
+                        {
+                            result2.win = false;
+                            return result2;
+                        }
                     }
                 }
             }
@@ -259,18 +281,26 @@ namespace Risk
                     if (AttackTot > DefenseTot)
                     {
                         armytotalD -= 1;
+                        result2.sub += 1;
                         if (armytotalD <= 0)
-                            return false;
+                        {
+                            result1.win = true;
+                            return result1;
+                        }
                     }
                     else
                     {
                         armytotalA -= 1;
+                        result1.sub += 1;
                         if (armytotalA <= 0)
-                            return true;
+                        {
+                            result2.win = false;
+                            return result2;
+                        }
                     }
                 }
             }
-            return true;
+            return ResultDefault;
         } ///determines the winner of a roll
 
         private void Continent_Count()
@@ -413,6 +443,7 @@ namespace Risk
 
         private void Map_Form3_Load(object sender, EventArgs e)
         {
+            ButtUpDown1.Enabled = false;
             Round = 1;
             bool GameWon = false;
             initial_armies = (-5 * max) + 50;
@@ -515,9 +546,9 @@ namespace Risk
                 return false;
             }
         } /// Decrements the amount of availiable troops by one
-        
-        
 
+        bool secondbutt = false;
+        
         private void Butt_Click(object sender, EventArgs e)
         {
             Button butt = sender as Button;
@@ -532,7 +563,7 @@ namespace Risk
             }
             else /// during attack
             {
-                if (firstbutt == true) /// first attack phase
+                if (firstbutt == true && secondbutt == false) /// first attack phase
                 {
 
                     butt.BackColor = Color.BurlyWood; /// sets colour to show selected button
@@ -550,9 +581,9 @@ namespace Risk
                     } /// finds the selected button and saves as butt1
 
                     int opposing_player = button_player(butt1);
-                    
+
                     Grey_Buttons(1, ref Player_Countries, false, true);
-                    
+
                     for (int i = 1; i < 43; i++)
                     {
                         string b1 = "C" + i.ToString();
@@ -565,22 +596,22 @@ namespace Risk
 
                     firstbutt = false;
                 }
-                else /// second attack phase
+                else if (firstbutt == false && secondbutt == false)/// second attack phase
                 {
                     string b1 = "C" + butt1.ToString();
                     Button Attacking = this.Controls.Find(b1, true).FirstOrDefault() as Button;
                     int armya = Convert.ToInt32(Attacking.Text);
                     int armyd = Convert.ToInt32(butt.Text);
-                    ///bool roll_result = Roll(armya, armyd); /// true means attacker wins (doesn't work)
-                    bool roll_result = true;
-                    if (roll_result == true)
+                    bool_int roll_result = Roll(armya, armyd); /// true means attacker wins (doesn't work)
+                    if (roll_result.win == true)
                     {
                         ///vague outline:
                         ///get current player colour DONE
-                        ///subtract lost units from winner somehow TODO
+                        ///subtract lost units from winner somehow DONE?
                         ///get owner of dead tile DONE
                         ///remove tile from previous owner and give to current player DONE
                         ///call the colour set funciton to correct the colours DONE
+                        butt.Text = "1";
                         Color Current_player_colour = Player_colour_from_number(Player);
                         for (int i = 0; i < Player_Countries[Player].Count(); i++)
                         {
@@ -588,7 +619,7 @@ namespace Risk
                             Button Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
                             if (Player_Butt.BackColor == Color.BurlyWood)
                             {
-                                Player_Butt.BackColor = Current_player_colour;
+                                Player_Butt.Text = Convert.ToString(Convert.ToInt32(Player_Butt.Text) - roll_result.sub);
                             }
                         }
 
@@ -606,15 +637,67 @@ namespace Risk
 
 
 
-                        /// add functionality to move troops when country is taken
+                        /// ADD functionality to move troops when country is taken
+                        /// ADD 
 
                         /// Reset to initial state so more tiles can be taken
 
                         firstbutt = true;
 
                         Grey_Buttons(1, ref Player_Countries, false, true);
-                        Grey_Buttons(Player, ref Player_Countries, true, false);
 
+                        Next_Player_Button.Enabled = false;
+                        ButtUpDown1.Enabled = true;
+                        butt.Enabled = true;
+                        MessageBox.Show("Please enter the amount of troops you wish to transfer into the box on the left");
+                        secondbutt = true;
+
+
+
+                        
+
+                    }
+                    else /// this means that if you fail a roll your turn ends, I'm not sure if I should keep this implementation or not.
+                    {
+                        butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) - roll_result.sub);
+                        Color Current_player_colour = Player_colour_from_number(Player);
+                        for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                        {
+                            string buttname = "C" + Player_Countries[Player][i].ToString();
+                            Button Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
+                            if (Player_Butt.BackColor == Color.BurlyWood)
+                            {
+                                Player_Butt.BackColor = Current_player_colour;
+                                Player_Butt.Text = "1";
+                            }
+                        }
+                        Grey_Buttons(1, ref Player_Countries, false, true);
+                        MessageBox.Show("Please enter the next round");
+                        firstbutt = true;
+                    }
+                }
+                else if (secondbutt == true) /// troop transfer
+                {
+                    Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;
+                    for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                    {
+                        string buttname = "C" + Player_Countries[Player][i].ToString();
+                        Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
+                        if (Player_Butt.BackColor == Color.BurlyWood)
+                        {
+                            break;
+                        }
+                    }
+                    if (ButtUpDown1.Value >= Convert.ToInt32(Player_Butt.Text))
+                    {
+                        MessageBox.Show("You cannot transfer more troops than are on the tile");
+                    }
+                    else
+                    {
+                        butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) + ButtUpDown1.Value);
+                        Player_Butt.Text = Convert.ToString(Convert.ToInt32(Player_Butt.Text) - ButtUpDown1.Value);
+                        
+                        Grey_Buttons(Player, ref Player_Countries, true, false);
                         Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
                         for (int i = 0; i < Player_Countries[Player].Count(); i++)
                         {
@@ -625,13 +708,10 @@ namespace Risk
                                 Individual_Button_Grey(false, Player_Countries[Player][i]);
                             }
                         }
-
-                    }
-                    else /// this means that if you fail a roll your turn ends, I'm not sure if I should keep this implementation or not.
-                    {
-                        butt.Text = "1";
-                        Grey_Buttons(1, ref Player_Countries, false, true);
-                        MessageBox.Show("Please enter the next round");
+                        firstbutt = true;
+                        secondbutt = false;
+                        Color Current_player_colour = Player_colour_from_number(Player);
+                        Player_Butt.BackColor = Current_player_colour;
                     }
                 }
             }
