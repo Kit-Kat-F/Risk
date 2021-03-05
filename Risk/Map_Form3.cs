@@ -35,7 +35,6 @@ namespace Risk
 
         bool firstbutt = true;
         int butt1;
-        int butt2;
 
         public Map_Form3(int MaxPlayers, ref bool[,] matrix)
         {
@@ -553,7 +552,7 @@ namespace Risk
         {
             Button butt = sender as Button;
 
-            if (GameState.Text != "Attacking")
+            if (GameState.Text == "Allocate Your Troops")
             {
                 butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) + 1);
                 if (Decrement() == false)
@@ -561,7 +560,7 @@ namespace Risk
                     butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) - 1);
                 }
             }
-            else /// during attack
+            else if (GameState.Text == "Attacking") /// during attack
             {
                 if (firstbutt == true && secondbutt == false) /// first attack phase
                 {
@@ -654,7 +653,7 @@ namespace Risk
 
 
 
-                        
+
 
                     }
                     else /// this means that if you fail a roll your turn ends, I'm not sure if I should keep this implementation or not.
@@ -696,7 +695,7 @@ namespace Risk
                     {
                         butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) + ButtUpDown1.Value);
                         Player_Butt.Text = Convert.ToString(Convert.ToInt32(Player_Butt.Text) - ButtUpDown1.Value);
-                        
+
                         Grey_Buttons(Player, ref Player_Countries, true, false);
                         Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
                         for (int i = 0; i < Player_Countries[Player].Count(); i++)
@@ -712,6 +711,91 @@ namespace Risk
                         secondbutt = false;
                         Color Current_player_colour = Player_colour_from_number(Player);
                         Player_Butt.BackColor = Current_player_colour;
+                        Next_Player_Button.Enabled = true;
+                        ButtUpDown1.Enabled = false;
+                    }
+                }
+            }                                                                            
+            else if (GameState.Text == "Fortifying")
+            {
+                if (firstbutt == true)
+                {
+                    butt.BackColor = Color.BurlyWood;
+                    firstbutt = false;
+                }
+                else if (firstbutt == false && secondbutt == false)
+                {
+                    int start = -1;
+                    Button Start_Button;
+                    int end = -1;
+                    Button End_Button;
+
+                    butt.BackColor = Color.Chocolate;
+
+                    for (int i = 1; i < 43; i++)
+                    {
+                        string b1 = "C" + i.ToString();
+                        Button PlayersColor = this.Controls.Find(b1, true).FirstOrDefault() as Button;
+                        if (PlayersColor.BackColor == Color.BurlyWood)
+                        {
+                            start = i;
+                            Start_Button = PlayersColor;
+                        }
+                        else if ( PlayersColor.BackColor == Color.Chocolate)
+                        {
+                            end = i;
+                            End_Button = PlayersColor;
+                        }
+                    }
+
+                    if (DJ_algo(ref AdjacencyMatrix, start, end) == true)
+                    {
+                        secondbutt = true;
+
+                        MessageBox.Show("Please enter the amount of troops you wish to transfer into the box on the left and click the country again");
+                        Grey_Buttons(1, ref Player_Countries, false, true);
+
+                        Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;
+                        for (int i = 0; i < Player_Countries.Count(); i++)
+                        {
+                            string buttname = "C" + Player_Countries[Player][i].ToString();                                          
+                            Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
+                            if (Player_Butt.BackColor == Color.Chocolate)
+                            {
+                                Individual_Button_Grey(true, i);
+                                break;
+                            }
+                        }
+                        ButtUpDown1.Enabled = true;
+                        
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select two countries connected by other owned countries. Thank you!");
+                    }
+
+                }
+                else if (secondbutt == true)
+                {
+                    Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;                              ///default value 
+                    for (int i = 0; i < Player_Countries[Player].Count(); i++)                                                   ///
+                    {                                                                                                            /// 
+                        string buttname = "C" + Player_Countries[Player][i].ToString();                                          ///
+                        Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;                             ///
+                        if (Player_Butt.BackColor == Color.BurlyWood)                                                            /// 
+                        {                                                                                                        ///
+                            break;                                                                                               ///finds the button selected last time
+                        }                                                                                                        ///
+                    }                                                                                                            /// 
+                    if (ButtUpDown1.Value >= Convert.ToInt32(Player_Butt.Text))                                                  ///
+                    {                                                                                                            ///
+                        MessageBox.Show("You cannot transfer more troops than are on the tile");                                 ///checks if the player is trying to move too many troops
+                    }                                                                                                            ///
+                    else                                                                                                         /// 
+                    {                                                                                                            ///
+                        butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) + ButtUpDown1.Value);                            ///new button value = current val + val from uppy downy input thing
+                        Player_Butt.Text = Convert.ToString(Convert.ToInt32(Player_Butt.Text) - ButtUpDown1.Value);              ///new button value = current val - val from uppy downy input thing
                     }
                 }
             }
@@ -817,6 +901,39 @@ namespace Risk
             }
         } /// Greys one button at a time
 
+        List<int> checked_nodes = new List<int>();
+        private bool DJ_algo(ref bool[,] matrix, int start, int end)
+        {
+            List<int> Connected = new List<int>();
+            
+            for (int i = 1; i < 43; i++)
+            {
+                if (AdjacencyMatrix[start, i] == true)
+                {
+                    if (i == end)
+                        return true; /// if end node is found returns true
+                    else
+                    {
+                        Connected.Add(i); /// finds all connected nodes
+                    }
+                }
+            }
+            for (int i = 0; i < Connected.Count; i++)
+            {
+                if (checked_nodes.Contains(Connected[i]) == false)
+                {
+                    checked_nodes.Add(Connected[i]);
+                    bool Next_level = DJ_algo(ref matrix, Connected[i], end);
+                    if (Next_level == true)
+                    {
+                        return true; /// escape condition
+                    }
+                }
+            }
+            
+            return false; /// failiure condition
+        }
+
         private void Next_Player_Button_Click(object sender, EventArgs e)
         {
             if (GameState.Text == "Allocate Your Troops")
@@ -857,6 +974,7 @@ namespace Risk
 
                 Grey_Buttons(1, ref Player_Countries, false, true);
                 Grey_Buttons(Player, ref Player_Countries, true, false);
+
 
                 /// round increment
                 if (Player == max - 1)
