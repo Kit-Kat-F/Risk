@@ -730,7 +730,7 @@ namespace Risk
                     int start = -1;
                     Button Start_Button;
                     int end = -1;
-                    Button End_Button;
+                    Button End_Button = this.Controls.Find("-1", true).FirstOrDefault() as Button;
 
                     butt.BackColor = Color.Chocolate;
 
@@ -750,26 +750,15 @@ namespace Risk
                         }
                     }
 
-                    if (DJ_algo(ref AdjacencyMatrix, start, end) == true)
+                    if (DJ_algo(ref AdjacencyMatrix, start, end) == true) /// this is actually entered
                     {
                         secondbutt = true;
 
                         MessageBox.Show("Please enter the amount of troops you wish to transfer into the box on the left and click the country again");
                         Grey_Buttons(1, ref Player_Countries, false, true);
 
-                        Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;
-                        for (int i = 0; i < Player_Countries.Count(); i++)
-                        {
-                            string buttname = "C" + Player_Countries[Player][i].ToString();                                          
-                            Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
-                            if (Player_Butt.BackColor == Color.Chocolate)
-                            {
-                                
-                                break;
-                            }
-                        }
                         ButtUpDown1.Enabled = true;
-                        Player_Butt.Enabled = true;
+                        End_Button.Enabled = true;
 
                     }
                     else
@@ -781,15 +770,20 @@ namespace Risk
                 else if (secondbutt == true)
                 {
                     Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;                              ///default value 
+                    bool founddd = false;
                     for (int i = 0; i < Player_Countries[Player].Count(); i++)                                                   ///
-                    {                                                                                                            /// 
-                        string buttname = "C" + Player_Countries[Player][i].ToString();                                          ///
-                        Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;                             ///
+                    {                                        ///
+                        Player_Butt = this.Controls.Find("C"+Player_Countries[Player][i].ToString(), true).FirstOrDefault() as Button;                             ///
                         if (Player_Butt.BackColor == Color.BurlyWood)                                                            /// 
                         {                                                                                                        ///
+                            founddd = true;
                             break;                                                                                               ///finds the button selected last time
                         }                                                                                                        ///
-                    }                                                                                                            /// 
+                    }         
+                    if (founddd == false)
+                    {
+                        MessageBox.Show("you're code is dumb");
+                    }
                     if (ButtUpDown1.Value >= Convert.ToInt32(Player_Butt.Text))                                                  ///
                     {                                                                                                            ///
                         MessageBox.Show("You cannot transfer more troops than are on the tile");                                 ///checks if the player is trying to move too many troops
