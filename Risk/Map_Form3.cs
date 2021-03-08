@@ -239,8 +239,8 @@ namespace Risk
             {
                 while (armytotalA != 0 || armytotalD != 0)
                 {
-                    AttackTot = Rand.Next(1, 6);
-                    DefenseTot = Rand.Next(1, 6) + Rand.Next(1, 6);
+                    AttackTot = Rand.Next(1, 7);
+                    DefenseTot = Rand.Next(1, 7) + Rand.Next(1, 7);
                     if (AttackTot > DefenseTot)
                     {
                         armytotalD -= 1;
@@ -269,13 +269,13 @@ namespace Risk
                 {
                     if (armytotalA - armytotalD == 1)
                     {
-                        AttackTot = Rand.Next(1, 6) + Rand.Next(1, 6);
-                        DefenseTot = Rand.Next(1, 6) + Rand.Next(1, 6);
+                        AttackTot = Rand.Next(1, 7) + Rand.Next(1, 7);
+                        DefenseTot = Rand.Next(1, 7) + Rand.Next(1, 7);
                     }
                     else if (armytotalA - armytotalD >= 2)
                     {
-                        AttackTot = Rand.Next(1, 6) + Rand.Next(1, 6) + Rand.Next(1, 6);
-                        DefenseTot = Rand.Next(1, 6) + Rand.Next(1, 6);
+                        AttackTot = Rand.Next(1, 7) + Rand.Next(1, 7) + Rand.Next(1, 7);
+                        DefenseTot = Rand.Next(1, 7) + Rand.Next(1, 7);
                     }
                     if (AttackTot > DefenseTot)
                     {
@@ -564,6 +564,7 @@ namespace Risk
             {
                 if (firstbutt == true && secondbutt == false) /// first attack phase
                 {
+                    
 
                     butt.BackColor = Color.BurlyWood; /// sets colour to show selected button
 
@@ -610,6 +611,7 @@ namespace Risk
                         ///get owner of dead tile DONE
                         ///remove tile from previous owner and give to current player DONE
                         ///call the colour set funciton to correct the colours DONE
+                        ///new bug, you can softlock game by clicking a tile surrounded by nothing but your own colour
                         butt.Text = "1";
                         Color Current_player_colour = Player_colour_from_number(Player);
                         for (int i = 0; i < Player_Countries[Player].Count(); i++)
@@ -762,12 +764,12 @@ namespace Risk
                             Player_Butt = this.Controls.Find(buttname, true).FirstOrDefault() as Button;
                             if (Player_Butt.BackColor == Color.Chocolate)
                             {
-                                Individual_Button_Grey(true, i);
+                                
                                 break;
                             }
                         }
                         ButtUpDown1.Enabled = true;
-                        
+                        Player_Butt.Enabled = true;
 
                     }
                     else
@@ -912,7 +914,7 @@ namespace Risk
                 {
                     if (i == end)
                         return true; /// if end node is found returns true
-                    else
+                    else if (ownercheck(i) == true)
                     {
                         Connected.Add(i); /// finds all connected nodes
                     }
@@ -932,6 +934,14 @@ namespace Risk
             }
             
             return false; /// failiure condition
+        }
+
+        private bool ownercheck(int tile)
+        {
+            if (Player_Countries[Player].Contains(tile) == true)
+                return true;
+            else
+                return false;
         }
 
         private void Next_Player_Button_Click(object sender, EventArgs e)
