@@ -898,13 +898,13 @@ namespace Risk
         } /// Greys one button at a time
 
         List<int> checked_nodes = new List<int>();
-        private bool DJ_algo(ref bool[,] matrix, int start, int end)
+        private bool DJ_algo_start(ref bool[,] matrix, int start, int end)
         {
             List<int> Connected = new List<int>();
             
             for (int i = 1; i < 43; i++)
             {
-                if (AdjacencyMatrix[start, i] == true)
+                if (AdjacencyMatrix[start, i] == true && Player_Countries[Player].Contains(i) == true) /// i don't think this bit works, it never returns true now that I added the second half of this line.
                 {
                     if (i == end)
                         return true; /// if end node is found returns true
@@ -919,7 +919,7 @@ namespace Risk
                 if (checked_nodes.Contains(Connected[i]) == false)
                 {
                     checked_nodes.Add(Connected[i]);
-                    bool Next_level = DJ_algo(ref matrix, Connected[i], end);
+                    bool Next_level = DJ_algo_start(ref matrix, Connected[i], end);
                     if (Next_level == true)
                     {
                         return true; /// escape condition
@@ -929,6 +929,13 @@ namespace Risk
             
             return false; /// failiure condition
         }
+
+        private bool DJ_algo(ref bool[,] matrix, int start, int end)
+        {
+            bool output = DJ_algo_start(ref matrix, start, end);
+            checked_nodes.Clear();
+            return output;
+        } /// this basically just resets the 'global' checked_nodes variable before moving on, I can't be bothered to find a better solution yet
 
         private bool ownercheck(int tile)
         {
@@ -944,17 +951,25 @@ namespace Risk
             {
                 GameState.Text = "Attacking";
 
-                Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
-                for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                if (Round == 1)
                 {
-                    string ButtonName = "C" + Player_Countries[Player][i].ToString();
-                    bt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
-                    if (bt.Text == "1")
-                    {
-                        Individual_Button_Grey(false, Player_Countries[Player][i]);
-                    }
+                    MessageBox.Show("Please enter the next turn to allow all players to allocate their troops");
+                    Grey_Buttons(1, ref Player_Countries, false, true);
                 }
 
+                else
+                {
+                    Button bt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
+                    for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                    {
+                        string ButtonName = "C" + Player_Countries[Player][i].ToString();
+                        bt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
+                        if (bt.Text == "1")
+                        {
+                            Individual_Button_Grey(false, Player_Countries[Player][i]);
+                        }
+                    }
+                }
                 ///List<int> current_countries = Player_Countries[Player];
                 ///Grey_Buttons(1, ref Player_Countries, true, true); /// makes all buttons enabled
                 ///
@@ -1013,7 +1028,7 @@ namespace Risk
                 Grey_Buttons(Player, ref Player_Countries, true, false);
                 Colour_Hold(Player);
             }
-        } /// This does a lot of stuff
+        } /// This does a lot of stuff, it increments the round too early, in the last player's fortify stage it says its the round above what it should be.
 
         private void Button_Colour(int currentplayer, int CurrentButton)
         {
