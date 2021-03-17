@@ -80,6 +80,7 @@
             this.C12 = new System.Windows.Forms.Button();
             this.C13 = new System.Windows.Forms.Button();
             this.C41 = new System.Windows.Forms.Button();
+            this.Turn_Complete_Button = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ButtUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -89,9 +90,10 @@
             this.GameState.AutoSize = true;
             this.GameState.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameState.Location = new System.Drawing.Point(6, 42);
+            this.GameState.Location = new System.Drawing.Point(12, 81);
+            this.GameState.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.GameState.Name = "GameState";
-            this.GameState.Size = new System.Drawing.Size(101, 20);
+            this.GameState.Size = new System.Drawing.Size(187, 37);
             this.GameState.TabIndex = 0;
             this.GameState.Text = "GameState";
             // 
@@ -100,17 +102,19 @@
             this.PlayerTurn.AutoSize = true;
             this.PlayerTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PlayerTurn.Location = new System.Drawing.Point(6, 16);
+            this.PlayerTurn.Location = new System.Drawing.Point(12, 31);
+            this.PlayerTurn.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.PlayerTurn.Name = "PlayerTurn";
-            this.PlayerTurn.Size = new System.Drawing.Size(99, 20);
+            this.PlayerTurn.Size = new System.Drawing.Size(193, 37);
             this.PlayerTurn.TabIndex = 1;
             this.PlayerTurn.Text = "Player Turn";
             // 
             // C42
             // 
-            this.C42.Location = new System.Drawing.Point(742, 158);
+            this.C42.Location = new System.Drawing.Point(1484, 304);
+            this.C42.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C42.Name = "C42";
-            this.C42.Size = new System.Drawing.Size(75, 23);
+            this.C42.Size = new System.Drawing.Size(150, 44);
             this.C42.TabIndex = 2;
             this.C42.Text = "1";
             this.C42.UseVisualStyleBackColor = true;
@@ -118,6 +122,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Turn_Complete_Button);
             this.groupBox1.Controls.Add(this.ButtUpDown1);
             this.groupBox1.Controls.Add(this.Round_Count);
             this.groupBox1.Controls.Add(this.Next_Player_Button);
@@ -125,19 +130,21 @@
             this.groupBox1.Controls.Add(this.AvailableTroops);
             this.groupBox1.Controls.Add(this.GameState);
             this.groupBox1.Controls.Add(this.PlayerTurn);
-            this.groupBox1.Location = new System.Drawing.Point(12, 353);
+            this.groupBox1.Location = new System.Drawing.Point(24, 679);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(219, 300);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Size = new System.Drawing.Size(438, 577);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controls";
             // 
             // ButtUpDown1
             // 
-            this.ButtUpDown1.Location = new System.Drawing.Point(12, 100);
-            this.ButtUpDown1.Margin = new System.Windows.Forms.Padding(2);
+            this.ButtUpDown1.Location = new System.Drawing.Point(24, 192);
+            this.ButtUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtUpDown1.Name = "ButtUpDown1";
-            this.ButtUpDown1.Size = new System.Drawing.Size(60, 20);
+            this.ButtUpDown1.Size = new System.Drawing.Size(120, 31);
             this.ButtUpDown1.TabIndex = 45;
             // 
             // Round_Count
@@ -145,17 +152,19 @@
             this.Round_Count.AutoSize = true;
             this.Round_Count.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Round_Count.Location = new System.Drawing.Point(44, 271);
+            this.Round_Count.Location = new System.Drawing.Point(88, 521);
+            this.Round_Count.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.Round_Count.Name = "Round_Count";
-            this.Round_Count.Size = new System.Drawing.Size(115, 20);
+            this.Round_Count.Size = new System.Drawing.Size(217, 37);
             this.Round_Count.TabIndex = 47;
             this.Round_Count.Text = "Round Count";
             // 
             // Next_Player_Button
             // 
-            this.Next_Player_Button.Location = new System.Drawing.Point(138, 271);
+            this.Next_Player_Button.Location = new System.Drawing.Point(276, 521);
+            this.Next_Player_Button.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Next_Player_Button.Name = "Next_Player_Button";
-            this.Next_Player_Button.Size = new System.Drawing.Size(75, 23);
+            this.Next_Player_Button.Size = new System.Drawing.Size(150, 44);
             this.Next_Player_Button.TabIndex = 45;
             this.Next_Player_Button.Text = "Next Round";
             this.Next_Player_Button.UseVisualStyleBackColor = true;
@@ -164,26 +173,29 @@
             // Colour_Holder
             // 
             this.Colour_Holder.AutoSize = true;
-            this.Colour_Holder.Location = new System.Drawing.Point(126, 21);
+            this.Colour_Holder.Location = new System.Drawing.Point(252, 40);
+            this.Colour_Holder.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.Colour_Holder.Name = "Colour_Holder";
-            this.Colour_Holder.Size = new System.Drawing.Size(67, 13);
+            this.Colour_Holder.Size = new System.Drawing.Size(132, 25);
             this.Colour_Holder.TabIndex = 46;
             this.Colour_Holder.Text = "0000000000";
             // 
             // AvailableTroops
             // 
             this.AvailableTroops.AutoSize = true;
-            this.AvailableTroops.Location = new System.Drawing.Point(10, 72);
+            this.AvailableTroops.Location = new System.Drawing.Point(20, 138);
+            this.AvailableTroops.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.AvailableTroops.Name = "AvailableTroops";
-            this.AvailableTroops.Size = new System.Drawing.Size(86, 13);
+            this.AvailableTroops.Size = new System.Drawing.Size(173, 25);
             this.AvailableTroops.TabIndex = 2;
             this.AvailableTroops.Text = "Avaliable Troops";
             // 
             // C7
             // 
-            this.C7.Location = new System.Drawing.Point(870, 127);
+            this.C7.Location = new System.Drawing.Point(1740, 244);
+            this.C7.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C7.Name = "C7";
-            this.C7.Size = new System.Drawing.Size(75, 23);
+            this.C7.Size = new System.Drawing.Size(150, 44);
             this.C7.TabIndex = 4;
             this.C7.Text = "1";
             this.C7.UseVisualStyleBackColor = true;
@@ -191,9 +203,10 @@
             // 
             // C6
             // 
-            this.C6.Location = new System.Drawing.Point(953, 85);
+            this.C6.Location = new System.Drawing.Point(1906, 163);
+            this.C6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C6.Name = "C6";
-            this.C6.Size = new System.Drawing.Size(75, 23);
+            this.C6.Size = new System.Drawing.Size(150, 44);
             this.C6.TabIndex = 5;
             this.C6.Text = "1";
             this.C6.UseVisualStyleBackColor = true;
@@ -201,9 +214,10 @@
             // 
             // C5
             // 
-            this.C5.Location = new System.Drawing.Point(1043, 62);
+            this.C5.Location = new System.Drawing.Point(2086, 119);
+            this.C5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C5.Name = "C5";
-            this.C5.Size = new System.Drawing.Size(75, 23);
+            this.C5.Size = new System.Drawing.Size(150, 44);
             this.C5.TabIndex = 6;
             this.C5.Text = "1";
             this.C5.UseVisualStyleBackColor = true;
@@ -211,9 +225,10 @@
             // 
             // C4
             // 
-            this.C4.Location = new System.Drawing.Point(1138, 63);
+            this.C4.Location = new System.Drawing.Point(2276, 121);
+            this.C4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C4.Name = "C4";
-            this.C4.Size = new System.Drawing.Size(75, 23);
+            this.C4.Size = new System.Drawing.Size(150, 44);
             this.C4.TabIndex = 7;
             this.C4.Text = "1";
             this.C4.UseVisualStyleBackColor = true;
@@ -221,9 +236,10 @@
             // 
             // C11
             // 
-            this.C11.Location = new System.Drawing.Point(1015, 146);
+            this.C11.Location = new System.Drawing.Point(2030, 281);
+            this.C11.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C11.Name = "C11";
-            this.C11.Size = new System.Drawing.Size(75, 23);
+            this.C11.Size = new System.Drawing.Size(150, 44);
             this.C11.TabIndex = 8;
             this.C11.Text = "1";
             this.C11.UseVisualStyleBackColor = true;
@@ -231,9 +247,10 @@
             // 
             // C10
             // 
-            this.C10.Location = new System.Drawing.Point(1030, 213);
+            this.C10.Location = new System.Drawing.Point(2060, 410);
+            this.C10.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C10.Name = "C10";
-            this.C10.Size = new System.Drawing.Size(75, 23);
+            this.C10.Size = new System.Drawing.Size(150, 44);
             this.C10.TabIndex = 9;
             this.C10.Text = "1";
             this.C10.UseVisualStyleBackColor = true;
@@ -241,9 +258,10 @@
             // 
             // C9
             // 
-            this.C9.Location = new System.Drawing.Point(1003, 281);
+            this.C9.Location = new System.Drawing.Point(2006, 540);
+            this.C9.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C9.Name = "C9";
-            this.C9.Size = new System.Drawing.Size(75, 23);
+            this.C9.Size = new System.Drawing.Size(150, 44);
             this.C9.TabIndex = 10;
             this.C9.Text = "1";
             this.C9.UseVisualStyleBackColor = true;
@@ -251,9 +269,10 @@
             // 
             // C8
             // 
-            this.C8.Location = new System.Drawing.Point(858, 229);
+            this.C8.Location = new System.Drawing.Point(1716, 440);
+            this.C8.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C8.Name = "C8";
-            this.C8.Size = new System.Drawing.Size(75, 23);
+            this.C8.Size = new System.Drawing.Size(150, 44);
             this.C8.TabIndex = 11;
             this.C8.Text = "1";
             this.C8.UseVisualStyleBackColor = true;
@@ -261,9 +280,10 @@
             // 
             // C14
             // 
-            this.C14.Location = new System.Drawing.Point(934, 331);
+            this.C14.Location = new System.Drawing.Point(1868, 637);
+            this.C14.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C14.Name = "C14";
-            this.C14.Size = new System.Drawing.Size(75, 23);
+            this.C14.Size = new System.Drawing.Size(150, 44);
             this.C14.TabIndex = 12;
             this.C14.Text = "1";
             this.C14.UseVisualStyleBackColor = true;
@@ -271,9 +291,10 @@
             // 
             // C15
             // 
-            this.C15.Location = new System.Drawing.Point(797, 333);
+            this.C15.Location = new System.Drawing.Point(1594, 640);
+            this.C15.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C15.Name = "C15";
-            this.C15.Size = new System.Drawing.Size(75, 23);
+            this.C15.Size = new System.Drawing.Size(150, 44);
             this.C15.TabIndex = 13;
             this.C15.Text = "1";
             this.C15.UseVisualStyleBackColor = true;
@@ -281,9 +302,10 @@
             // 
             // C37
             // 
-            this.C37.Location = new System.Drawing.Point(1058, 480);
+            this.C37.Location = new System.Drawing.Point(2116, 923);
+            this.C37.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C37.Name = "C37";
-            this.C37.Size = new System.Drawing.Size(75, 23);
+            this.C37.Size = new System.Drawing.Size(150, 44);
             this.C37.TabIndex = 14;
             this.C37.Text = "1";
             this.C37.UseVisualStyleBackColor = true;
@@ -291,9 +313,10 @@
             // 
             // C38
             // 
-            this.C38.Location = new System.Drawing.Point(1208, 446);
+            this.C38.Location = new System.Drawing.Point(2416, 858);
+            this.C38.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C38.Name = "C38";
-            this.C38.Size = new System.Drawing.Size(75, 23);
+            this.C38.Size = new System.Drawing.Size(150, 44);
             this.C38.TabIndex = 15;
             this.C38.Text = "1";
             this.C38.UseVisualStyleBackColor = true;
@@ -301,9 +324,10 @@
             // 
             // C40
             // 
-            this.C40.Location = new System.Drawing.Point(1236, 539);
+            this.C40.Location = new System.Drawing.Point(2472, 1037);
+            this.C40.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C40.Name = "C40";
-            this.C40.Size = new System.Drawing.Size(75, 23);
+            this.C40.Size = new System.Drawing.Size(150, 44);
             this.C40.TabIndex = 16;
             this.C40.Text = "1";
             this.C40.UseVisualStyleBackColor = true;
@@ -311,9 +335,10 @@
             // 
             // C39
             // 
-            this.C39.Location = new System.Drawing.Point(1102, 581);
+            this.C39.Location = new System.Drawing.Point(2204, 1117);
+            this.C39.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C39.Name = "C39";
-            this.C39.Size = new System.Drawing.Size(75, 23);
+            this.C39.Size = new System.Drawing.Size(150, 44);
             this.C39.TabIndex = 17;
             this.C39.Text = "1";
             this.C39.UseVisualStyleBackColor = true;
@@ -321,9 +346,10 @@
             // 
             // C35
             // 
-            this.C35.Location = new System.Drawing.Point(845, 590);
+            this.C35.Location = new System.Drawing.Point(1690, 1135);
+            this.C35.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C35.Name = "C35";
-            this.C35.Size = new System.Drawing.Size(75, 23);
+            this.C35.Size = new System.Drawing.Size(150, 44);
             this.C35.TabIndex = 18;
             this.C35.Text = "1";
             this.C35.UseVisualStyleBackColor = true;
@@ -331,9 +357,10 @@
             // 
             // C34
             // 
-            this.C34.Location = new System.Drawing.Point(706, 588);
+            this.C34.Location = new System.Drawing.Point(1412, 1131);
+            this.C34.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C34.Name = "C34";
-            this.C34.Size = new System.Drawing.Size(75, 23);
+            this.C34.Size = new System.Drawing.Size(150, 44);
             this.C34.TabIndex = 19;
             this.C34.Text = "1";
             this.C34.UseVisualStyleBackColor = true;
@@ -341,9 +368,10 @@
             // 
             // C33
             // 
-            this.C33.Location = new System.Drawing.Point(677, 491);
+            this.C33.Location = new System.Drawing.Point(1354, 944);
+            this.C33.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C33.Name = "C33";
-            this.C33.Size = new System.Drawing.Size(75, 23);
+            this.C33.Size = new System.Drawing.Size(150, 44);
             this.C33.TabIndex = 20;
             this.C33.Text = "1";
             this.C33.UseVisualStyleBackColor = true;
@@ -351,9 +379,10 @@
             // 
             // C36
             // 
-            this.C36.Location = new System.Drawing.Point(783, 453);
+            this.C36.Location = new System.Drawing.Point(1566, 871);
+            this.C36.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C36.Name = "C36";
-            this.C36.Size = new System.Drawing.Size(75, 23);
+            this.C36.Size = new System.Drawing.Size(150, 44);
             this.C36.TabIndex = 21;
             this.C36.Text = "1";
             this.C36.UseVisualStyleBackColor = true;
@@ -361,9 +390,10 @@
             // 
             // C31
             // 
-            this.C31.Location = new System.Drawing.Point(596, 418);
+            this.C31.Location = new System.Drawing.Point(1192, 804);
+            this.C31.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C31.Name = "C31";
-            this.C31.Size = new System.Drawing.Size(75, 23);
+            this.C31.Size = new System.Drawing.Size(150, 44);
             this.C31.TabIndex = 22;
             this.C31.Text = "1";
             this.C31.UseVisualStyleBackColor = true;
@@ -371,9 +401,10 @@
             // 
             // C32
             // 
-            this.C32.Location = new System.Drawing.Point(687, 369);
+            this.C32.Location = new System.Drawing.Point(1374, 710);
+            this.C32.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C32.Name = "C32";
-            this.C32.Size = new System.Drawing.Size(75, 23);
+            this.C32.Size = new System.Drawing.Size(150, 44);
             this.C32.TabIndex = 23;
             this.C32.Text = "1";
             this.C32.UseVisualStyleBackColor = true;
@@ -381,9 +412,10 @@
             // 
             // C18
             // 
-            this.C18.Location = new System.Drawing.Point(529, 299);
+            this.C18.Location = new System.Drawing.Point(1058, 575);
+            this.C18.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C18.Name = "C18";
-            this.C18.Size = new System.Drawing.Size(75, 23);
+            this.C18.Size = new System.Drawing.Size(150, 44);
             this.C18.TabIndex = 24;
             this.C18.Text = "1";
             this.C18.UseVisualStyleBackColor = true;
@@ -391,9 +423,10 @@
             // 
             // C16
             // 
-            this.C16.Location = new System.Drawing.Point(632, 269);
+            this.C16.Location = new System.Drawing.Point(1264, 517);
+            this.C16.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C16.Name = "C16";
-            this.C16.Size = new System.Drawing.Size(75, 23);
+            this.C16.Size = new System.Drawing.Size(150, 44);
             this.C16.TabIndex = 25;
             this.C16.Text = "1";
             this.C16.UseVisualStyleBackColor = true;
@@ -401,9 +434,10 @@
             // 
             // C17
             // 
-            this.C17.Location = new System.Drawing.Point(620, 212);
+            this.C17.Location = new System.Drawing.Point(1240, 408);
+            this.C17.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C17.Name = "C17";
-            this.C17.Size = new System.Drawing.Size(75, 23);
+            this.C17.Size = new System.Drawing.Size(150, 44);
             this.C17.TabIndex = 26;
             this.C17.Text = "1";
             this.C17.UseVisualStyleBackColor = true;
@@ -411,9 +445,10 @@
             // 
             // C21
             // 
-            this.C21.Location = new System.Drawing.Point(623, 109);
+            this.C21.Location = new System.Drawing.Point(1246, 210);
+            this.C21.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C21.Name = "C21";
-            this.C21.Size = new System.Drawing.Size(75, 23);
+            this.C21.Size = new System.Drawing.Size(150, 44);
             this.C21.TabIndex = 27;
             this.C21.Text = "1";
             this.C21.UseVisualStyleBackColor = true;
@@ -421,9 +456,10 @@
             // 
             // C20
             // 
-            this.C20.Location = new System.Drawing.Point(520, 117);
+            this.C20.Location = new System.Drawing.Point(1040, 225);
+            this.C20.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C20.Name = "C20";
-            this.C20.Size = new System.Drawing.Size(75, 23);
+            this.C20.Size = new System.Drawing.Size(150, 44);
             this.C20.TabIndex = 28;
             this.C20.Text = "1";
             this.C20.UseVisualStyleBackColor = true;
@@ -431,9 +467,10 @@
             // 
             // C19
             // 
-            this.C19.Location = new System.Drawing.Point(512, 200);
+            this.C19.Location = new System.Drawing.Point(1024, 385);
+            this.C19.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C19.Name = "C19";
-            this.C19.Size = new System.Drawing.Size(75, 23);
+            this.C19.Size = new System.Drawing.Size(150, 44);
             this.C19.TabIndex = 29;
             this.C19.Text = "1";
             this.C19.UseVisualStyleBackColor = true;
@@ -441,9 +478,10 @@
             // 
             // C22
             // 
-            this.C22.Location = new System.Drawing.Point(418, 38);
+            this.C22.Location = new System.Drawing.Point(836, 73);
+            this.C22.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C22.Name = "C22";
-            this.C22.Size = new System.Drawing.Size(75, 23);
+            this.C22.Size = new System.Drawing.Size(150, 44);
             this.C22.TabIndex = 30;
             this.C22.Text = "1";
             this.C22.UseVisualStyleBackColor = true;
@@ -451,9 +489,10 @@
             // 
             // C23
             // 
-            this.C23.Location = new System.Drawing.Point(334, 158);
+            this.C23.Location = new System.Drawing.Point(668, 304);
+            this.C23.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C23.Name = "C23";
-            this.C23.Size = new System.Drawing.Size(75, 23);
+            this.C23.Size = new System.Drawing.Size(150, 44);
             this.C23.TabIndex = 31;
             this.C23.Text = "1";
             this.C23.UseVisualStyleBackColor = true;
@@ -461,9 +500,10 @@
             // 
             // C24
             // 
-            this.C24.Location = new System.Drawing.Point(265, 229);
+            this.C24.Location = new System.Drawing.Point(530, 440);
+            this.C24.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C24.Name = "C24";
-            this.C24.Size = new System.Drawing.Size(75, 23);
+            this.C24.Size = new System.Drawing.Size(150, 44);
             this.C24.TabIndex = 32;
             this.C24.Text = "1";
             this.C24.UseVisualStyleBackColor = true;
@@ -471,9 +511,10 @@
             // 
             // C2
             // 
-            this.C2.Location = new System.Drawing.Point(190, 75);
+            this.C2.Location = new System.Drawing.Point(380, 144);
+            this.C2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C2.Name = "C2";
-            this.C2.Size = new System.Drawing.Size(75, 23);
+            this.C2.Size = new System.Drawing.Size(150, 44);
             this.C2.TabIndex = 33;
             this.C2.Text = "1";
             this.C2.UseVisualStyleBackColor = true;
@@ -481,9 +522,10 @@
             // 
             // C1
             // 
-            this.C1.Location = new System.Drawing.Point(155, 140);
+            this.C1.Location = new System.Drawing.Point(310, 269);
+            this.C1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C1.Name = "C1";
-            this.C1.Size = new System.Drawing.Size(75, 23);
+            this.C1.Size = new System.Drawing.Size(150, 44);
             this.C1.TabIndex = 34;
             this.C1.Text = "1";
             this.C1.UseVisualStyleBackColor = true;
@@ -491,9 +533,10 @@
             // 
             // C3
             // 
-            this.C3.Location = new System.Drawing.Point(42, 85);
+            this.C3.Location = new System.Drawing.Point(84, 163);
+            this.C3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C3.Name = "C3";
-            this.C3.Size = new System.Drawing.Size(75, 23);
+            this.C3.Size = new System.Drawing.Size(150, 44);
             this.C3.TabIndex = 35;
             this.C3.Text = "1";
             this.C3.UseVisualStyleBackColor = true;
@@ -501,9 +544,10 @@
             // 
             // C25
             // 
-            this.C25.Location = new System.Drawing.Point(141, 199);
+            this.C25.Location = new System.Drawing.Point(282, 383);
+            this.C25.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C25.Name = "C25";
-            this.C25.Size = new System.Drawing.Size(75, 23);
+            this.C25.Size = new System.Drawing.Size(150, 44);
             this.C25.TabIndex = 36;
             this.C25.Text = "1";
             this.C25.UseVisualStyleBackColor = true;
@@ -511,9 +555,10 @@
             // 
             // C26
             // 
-            this.C26.Location = new System.Drawing.Point(171, 291);
+            this.C26.Location = new System.Drawing.Point(342, 560);
+            this.C26.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C26.Name = "C26";
-            this.C26.Size = new System.Drawing.Size(75, 23);
+            this.C26.Size = new System.Drawing.Size(150, 44);
             this.C26.TabIndex = 37;
             this.C26.Text = "1";
             this.C26.UseVisualStyleBackColor = true;
@@ -521,9 +566,10 @@
             // 
             // C27
             // 
-            this.C27.Location = new System.Drawing.Point(275, 362);
+            this.C27.Location = new System.Drawing.Point(550, 696);
+            this.C27.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C27.Name = "C27";
-            this.C27.Size = new System.Drawing.Size(75, 23);
+            this.C27.Size = new System.Drawing.Size(150, 44);
             this.C27.TabIndex = 38;
             this.C27.Text = "1";
             this.C27.UseVisualStyleBackColor = true;
@@ -531,9 +577,10 @@
             // 
             // C30
             // 
-            this.C30.Location = new System.Drawing.Point(384, 425);
+            this.C30.Location = new System.Drawing.Point(768, 817);
+            this.C30.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C30.Name = "C30";
-            this.C30.Size = new System.Drawing.Size(81, 23);
+            this.C30.Size = new System.Drawing.Size(162, 44);
             this.C30.TabIndex = 39;
             this.C30.Text = "1";
             this.C30.UseVisualStyleBackColor = true;
@@ -541,9 +588,10 @@
             // 
             // C28
             // 
-            this.C28.Location = new System.Drawing.Point(278, 440);
+            this.C28.Location = new System.Drawing.Point(556, 846);
+            this.C28.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C28.Name = "C28";
-            this.C28.Size = new System.Drawing.Size(75, 23);
+            this.C28.Size = new System.Drawing.Size(150, 44);
             this.C28.TabIndex = 40;
             this.C28.Text = "1";
             this.C28.UseVisualStyleBackColor = true;
@@ -551,9 +599,10 @@
             // 
             // C29
             // 
-            this.C29.Location = new System.Drawing.Point(306, 539);
+            this.C29.Location = new System.Drawing.Point(612, 1037);
+            this.C29.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C29.Name = "C29";
-            this.C29.Size = new System.Drawing.Size(75, 23);
+            this.C29.Size = new System.Drawing.Size(150, 44);
             this.C29.TabIndex = 41;
             this.C29.Text = "1";
             this.C29.UseVisualStyleBackColor = true;
@@ -561,9 +610,10 @@
             // 
             // C12
             // 
-            this.C12.Location = new System.Drawing.Point(1199, 214);
+            this.C12.Location = new System.Drawing.Point(2398, 412);
+            this.C12.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C12.Name = "C12";
-            this.C12.Size = new System.Drawing.Size(75, 23);
+            this.C12.Size = new System.Drawing.Size(150, 44);
             this.C12.TabIndex = 42;
             this.C12.Text = "1";
             this.C12.UseVisualStyleBackColor = true;
@@ -571,9 +621,10 @@
             // 
             // C13
             // 
-            this.C13.Location = new System.Drawing.Point(1048, 360);
+            this.C13.Location = new System.Drawing.Point(2096, 692);
+            this.C13.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C13.Name = "C13";
-            this.C13.Size = new System.Drawing.Size(75, 23);
+            this.C13.Size = new System.Drawing.Size(150, 44);
             this.C13.TabIndex = 43;
             this.C13.Text = "1";
             this.C13.UseVisualStyleBackColor = true;
@@ -581,21 +632,32 @@
             // 
             // C41
             // 
-            this.C41.Location = new System.Drawing.Point(253, 146);
+            this.C41.Location = new System.Drawing.Point(506, 281);
+            this.C41.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.C41.Name = "C41";
-            this.C41.Size = new System.Drawing.Size(75, 23);
+            this.C41.Size = new System.Drawing.Size(150, 44);
             this.C41.TabIndex = 44;
             this.C41.Text = "1";
             this.C41.UseVisualStyleBackColor = true;
             this.C41.Click += new System.EventHandler(this.Butt_Click);
             // 
+            // Turn_Complete_Button
+            // 
+            this.Turn_Complete_Button.Location = new System.Drawing.Point(276, 456);
+            this.Turn_Complete_Button.Name = "Turn_Complete_Button";
+            this.Turn_Complete_Button.Size = new System.Drawing.Size(150, 40);
+            this.Turn_Complete_Button.TabIndex = 45;
+            this.Turn_Complete_Button.Text = "Turn Complete";
+            this.Turn_Complete_Button.UseVisualStyleBackColor = true;
+            this.Turn_Complete_Button.Click += new System.EventHandler(this.Turn_Complete_Button_Click);
+            // 
             // Map_Form3
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1332, 665);
+            this.ClientSize = new System.Drawing.Size(2664, 1279);
             this.Controls.Add(this.C41);
             this.Controls.Add(this.C13);
             this.Controls.Add(this.C12);
@@ -639,6 +701,7 @@
             this.Controls.Add(this.C7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.C42);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Map_Form3";
             this.Text = "Map_Form3";
             this.Load += new System.EventHandler(this.Map_Form3_Load);
@@ -701,5 +764,6 @@
         private System.Windows.Forms.Label Colour_Holder;
         private System.Windows.Forms.Label Round_Count;
         private System.Windows.Forms.NumericUpDown ButtUpDown1;
+        private System.Windows.Forms.Button Turn_Complete_Button;
     }
 }

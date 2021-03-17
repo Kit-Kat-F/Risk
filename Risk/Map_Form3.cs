@@ -989,30 +989,27 @@ namespace Risk
 
             else if (GameState.Text == "Attacking")
             {
+                if (Player == max - 1)
+                {
+                    Next_Player_Button.Enabled = false;
+                }
+
                 GameState.Text = "Fortifying";
 
                 Grey_Buttons(1, ref Player_Countries, false, true);
                 Grey_Buttons(Player, ref Player_Countries, true, false);
 
-
-                /// round increment
-                if (Player == max - 1)
-                {
-                    Player = 0;
-                    Round += 1;
-                    Round_Count.Text = "Round " + Round.ToString() + ":";
-                }
-                else
+                if (Player != max - 1)
                 {
                     Player += 1;
                 }
+
             }
 
             else if (GameState.Text == "Fortifying")
             {
                 GameState.Text = "Allocate Your Troops";
 
-                MessageBox.Show(Round.ToString());
                 if (Round == 1)
                 {
                     AvailableTroops.Text = Convert.ToString(initial_armies); /// do starting amount on first go
@@ -1088,6 +1085,29 @@ namespace Risk
                 Button butt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
                 butt.Enabled = Enable;
             }
-        } /// Greys a list of buttons
+        }
+
+        bool round_over;
+
+        private void Turn_Complete_Button_Click(object sender, EventArgs e)
+        {
+            round_over = true;
+            Next_Player_Button.Enabled = true;
+
+            /// round increment
+            if (Player == max - 1)
+            {
+                Player = 0;
+                Round += 1;
+                Round_Count.Text = "Round " + Round.ToString() + ":";
+            }
+            else
+            {
+                Player += 1;
+            }
+
+            Next_Player_Button_Click(Turn_Complete_Button, e);
+        }
+        /// Greys a list of buttons
     }
 }
