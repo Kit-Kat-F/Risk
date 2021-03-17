@@ -750,7 +750,7 @@ namespace Risk
                         }
                     }
 
-                    if (DJ_algo(ref AdjacencyMatrix, start, end) == true) /// this is actually entered
+                    if (AdjacencyMatrix[start,end] == true) /// this is actually entered
                     {
                         secondbutt = true;
 
@@ -769,17 +769,30 @@ namespace Risk
                 }
                 else if (secondbutt == true)
                 {
-                    Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;                              ///default value 
+                    ///Button Player_Butt = this.Controls.Find("C1", true).FirstOrDefault() as Button;                              ///default value 
+                    ///bool founddd = false;
+                    ///for (int i = 0; i < Player_Countries[Player].Count(); i++)                                                   ///
+                    ///{                                        ///
+                    ///    Player_Butt = this.Controls.Find("C"+Player_Countries[Player][i].ToString(), true).FirstOrDefault() as Button;                             ///
+                    ///    if (Player_Butt.BackColor == Color.BurlyWood)                                                            /// 
+                    ///    {                                                                                                        ///
+                    ///        founddd = true;
+                    ///        break;                                                                                               ///finds the button selected last time
+                    ///    }                                                                                                        ///
+                    ///}    
                     bool founddd = false;
-                    for (int i = 0; i < Player_Countries[Player].Count(); i++)                                                   ///
-                    {                                        ///
-                        Player_Butt = this.Controls.Find("C"+Player_Countries[Player][i].ToString(), true).FirstOrDefault() as Button;                             ///
-                        if (Player_Butt.BackColor == Color.BurlyWood)                                                            /// 
-                        {                                                                                                        ///
+                    Button Player_Butt = this.Controls.Find("-1", true).FirstOrDefault() as Button;
+                    for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                    {
+                        string ButtonName = "C" + Player_Countries[Player][i].ToString();
+                        Player_Butt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
+                        MessageBox.Show(ButtonName + Convert.ToString(Player_Butt.BackColor));
+                        if (Player_Butt.BackColor == Color.BurlyWood)
+                        {
                             founddd = true;
-                            break;                                                                                               ///finds the button selected last time
-                        }                                                                                                        ///
-                    }         
+                            break;
+                        }
+                    }
                     if (founddd == false)
                     {
                         MessageBox.Show("you're code is dumb");
@@ -989,20 +1002,15 @@ namespace Risk
 
             else if (GameState.Text == "Attacking")
             {
-                if (Player == max - 1)
-                {
-                    Next_Player_Button.Enabled = false;
-                }
+                
+                Next_Player_Button.Enabled = false;
+                
 
                 GameState.Text = "Fortifying";
 
                 Grey_Buttons(1, ref Player_Countries, false, true);
                 Grey_Buttons(Player, ref Player_Countries, true, false);
 
-                if (Player != max - 1)
-                {
-                    Player += 1;
-                }
 
             }
 
@@ -1103,7 +1111,7 @@ namespace Risk
             }
             else
             {
-                Player += 1;
+                ///Player += 1;
             }
 
             Next_Player_Button_Click(Turn_Complete_Button, e);
