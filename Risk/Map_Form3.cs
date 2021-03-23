@@ -13,16 +13,16 @@ namespace Risk
     public partial class Map_Form3 : Form
     {
         bool[,] AdjacencyMatrix = new bool[43, 43];
-              
+
 
         int max;
         int Round;
         int initial_armies;
         int[,] TroopCount = new int[43, 43];
-        string[] Continents = new string[] {"Asia", "North America", "Europe", "Africa", "Oceana", "South America" };
+        string[] Continents = new string[] { "Asia", "North America", "Europe", "Africa", "Oceana", "South America" };
         int Player = 0;
 
-        List<int> Asia = new List<int>() { 4, 5, 6, 7, 8, 9, 10, 11, 12 , 13, 14, 15 };
+        List<int> Asia = new List<int>() { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
         List<int> North_America = new List<int>() { 1, 2, 3, 22, 23, 24, 25, 26, 41 };
         List<int> Europe = new List<int>() { 16, 17, 18, 19, 20, 21, 42 };
         List<int> Africa = new List<int>() { 31, 32, 33, 34, 35, 36 };
@@ -222,7 +222,6 @@ namespace Risk
             public int sub;
         }
 
-
         static bool_int Roll(int armytotalA, int armytotalD)
         {
             Random Rand = new Random();
@@ -300,7 +299,7 @@ namespace Risk
                 }
             }
             return ResultDefault;
-        } ///determines the winner of a roll
+        } ///determines the winner of a roll (Don't touch, this works and will break if you touch)
 
         private void Continent_Count()
         {
@@ -381,7 +380,7 @@ namespace Risk
             NewArmyTotal += current_territory_count / 3;
             for (int i = 0; i < current_continent_count; i++)
             {
-                switch(Player_Continents[Player][i])
+                switch (Player_Continents[Player][i])
                 {
                     case 0:
                         NewArmyTotal += 7;
@@ -405,14 +404,14 @@ namespace Risk
         private void TerritoryGive(ref List<List<int>> OwnedCountries)
         {///seems to be functional (for now)
             List<int> RemainingLand = new List<int>();
-            for (int i=1; i<43; i++)
+            for (int i = 1; i < 43; i++)
             {
                 RemainingLand.Add(i);
             }
             Random rnd = new Random();
             int currentnumber;
             int currentplayer = 0;
-            for (int i=1;i<43;i++)
+            for (int i = 1; i < 43; i++)
             {
                 if (currentplayer == max)
                     currentplayer = 0;
@@ -425,8 +424,8 @@ namespace Risk
 
             ///Debugging
             ///string message = "";
-            ///for (int i = 0; i<=OwnedCountries[0].Count-1; i++)
-            ///{
+            //for (int i = 0; i<=OwnedCountries[0].Count-1; i++)
+            //{
             ///    message = message + Convert.ToString(OwnedCountries[0][i]) + ", ";
             ///}
             ///MessageBox.Show(message);
@@ -448,15 +447,15 @@ namespace Risk
             initial_armies = (-5 * max) + 50;
             GameState.Text = "Allocate Your Troops";
             Round_Count.Text = "Round " + Round.ToString() + ":";
-            PlayerTurn.Text = "Player " + Convert.ToString(Player+1);
+            PlayerTurn.Text = "Player " + Convert.ToString(Player + 1);
             Colour_Hold(Player);
 
-            for (int i = 0; i <= max-1; i++)  /// not looping (Fixed)
+            for (int i = 0; i <= max - 1; i++)  /// not looping (Fixed)
             {
-                switch(i)
+                switch (i)
                 {
                     case 0:
-                        List<int> OwnedContinents1 = new List<int>(); 
+                        List<int> OwnedContinents1 = new List<int>();
                         List<int> OwnedCountries1 = new List<int>();
                         Player_Countries.Add(OwnedCountries1);
                         Player_Continents.Add(OwnedContinents1);
@@ -502,7 +501,7 @@ namespace Risk
 
         private void Colour_Hold(int current_player)
         {
-            switch(current_player)
+            switch (current_player)
             {
                 case 0:
                     Colour_Holder.BackColor = Color.White;
@@ -547,7 +546,7 @@ namespace Risk
         } /// Decrements the amount of availiable troops by one
 
         bool secondbutt = false;
-        
+
         private void Butt_Click(object sender, EventArgs e)
         {
             Button butt = sender as Button;
@@ -564,7 +563,7 @@ namespace Risk
             {
                 if (firstbutt == true && secondbutt == false) /// first attack phase
                 {
-                    
+
 
                     butt.BackColor = Color.BurlyWood; /// sets colour to show selected button
 
@@ -673,8 +672,9 @@ namespace Risk
                             }
                         }
                         Grey_Buttons(1, ref Player_Countries, false, true);
-                        MessageBox.Show("Please enter the next round");
+                        MessageBox.Show("You failed the attack, you have been moved to the fortification stage");
                         firstbutt = true;
+                        Next_Player_Button_Click(butt, e);
                     }
                 }
                 else if (secondbutt == true) /// troop transfer
@@ -717,13 +717,36 @@ namespace Risk
                         ButtUpDown1.Enabled = false;
                     }
                 }
-            }                                                                            
+            }
             else if (GameState.Text == "Fortifying")
             {
                 if (firstbutt == true)
                 {
+                    Turn_Complete_Button.Enabled = false;
                     butt.BackColor = Color.BurlyWood;
+                    int buttt = -1;
+                    for (int i = 1; i < 43; i++)
+                    {
+                        string b2 = "C" + i.ToString();
+                        Button initialbutt = this.Controls.Find(b2, true).FirstOrDefault() as Button;
+                        if (initialbutt.BackColor == Color.BurlyWood)
+                        {
+                            buttt = i;
+                            break;
+                        }
+                    }
+
                     firstbutt = false;
+                    Grey_Buttons(Player, ref Player_Countries, false, true);
+                    for (int i = 1; i < 43; i++)
+                    {
+                        string b1 = "C" + i.ToString();
+                        Button PlayersColor = this.Controls.Find(b1, true).FirstOrDefault() as Button;
+                        if (AdjacencyMatrix[buttt, i] == true && PlayersColor.BackColor == Player_colour_from_number(Player))
+                        {
+                            Individual_Button_Grey(true, i);
+                        }
+                    }
                 }
                 else if (firstbutt == false && secondbutt == false)
                 {
@@ -743,14 +766,14 @@ namespace Risk
                             start = i;
                             Start_Button = PlayersColor;
                         }
-                        else if ( PlayersColor.BackColor == Color.Chocolate)
+                        else if (PlayersColor.BackColor == Color.Chocolate)
                         {
                             end = i;
                             End_Button = PlayersColor;
                         }
                     }
 
-                    if (AdjacencyMatrix[start,end] == true) /// this is actually entered
+                    if (AdjacencyMatrix[start, end] == true) /// this is actually entered
                     {
                         secondbutt = true;
 
@@ -764,6 +787,11 @@ namespace Risk
                     else
                     {
                         MessageBox.Show("Please select two countries connected by other owned countries. Thank you!");
+                        for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                        {
+                            Button_Colour(Player, Player_Countries[Player][i]);
+                        }
+                        firstbutt = true;
                     }
 
                 }
@@ -786,7 +814,6 @@ namespace Risk
                     {
                         string ButtonName = "C" + Player_Countries[Player][i].ToString();
                         Player_Butt = this.Controls.Find(ButtonName, true).FirstOrDefault() as Button;
-                        MessageBox.Show(ButtonName + Convert.ToString(Player_Butt.BackColor));
                         if (Player_Butt.BackColor == Color.BurlyWood)
                         {
                             founddd = true;
@@ -800,11 +827,20 @@ namespace Risk
                     if (ButtUpDown1.Value >= Convert.ToInt32(Player_Butt.Text))                                                  ///
                     {                                                                                                            ///
                         MessageBox.Show("You cannot transfer more troops than are on the tile");                                 ///checks if the player is trying to move too many troops
+
                     }                                                                                                            ///
                     else                                                                                                         /// 
                     {                                                                                                            ///
                         butt.Text = Convert.ToString(Convert.ToInt32(butt.Text) + ButtUpDown1.Value);                            ///new button value = current val + val from uppy downy input thing
                         Player_Butt.Text = Convert.ToString(Convert.ToInt32(Player_Butt.Text) - ButtUpDown1.Value);              ///new button value = current val - val from uppy downy input thing
+                        for (int i = 0; i < Player_Countries[Player].Count(); i++)
+                        {
+                            Button_Colour(Player, Player_Countries[Player][i]);
+                        }
+                        butt.Enabled = false;
+                        firstbutt = true;
+                        secondbutt = false;
+                        Turn_Complete_Button.Enabled = true;
                     }
                 }
             }
@@ -842,7 +878,7 @@ namespace Risk
 
         private Color Player_colour_from_number(int player_num)
         {
-            
+
             Color colour = Color.Empty;
             switch (player_num)
             {
@@ -867,7 +903,7 @@ namespace Risk
             }
             return colour;
         } /// Gets the player color from the player number
-        
+
         private int button_player(int button_num)
         {
             string ButtonName = "C" + button_num.ToString();
@@ -911,10 +947,11 @@ namespace Risk
         } /// Greys one button at a time
 
         List<int> checked_nodes = new List<int>();
+
         private bool DJ_algo_start(ref bool[,] matrix, int start, int end)
         {
             List<int> Connected = new List<int>();
-            
+
             for (int i = 1; i < 43; i++)
             {
                 if (AdjacencyMatrix[start, i] == true && Player_Countries[Player].Contains(i) == true) /// i don't think this bit works, it never returns true now that I added the second half of this line.
@@ -939,7 +976,7 @@ namespace Risk
                     }
                 }
             }
-            
+
             return false; /// failiure condition
         }
 
@@ -1002,9 +1039,9 @@ namespace Risk
 
             else if (GameState.Text == "Attacking")
             {
-                
+                Turn_Complete_Button.Enabled = true;
                 Next_Player_Button.Enabled = false;
-                
+
 
                 GameState.Text = "Fortifying";
 
@@ -1111,11 +1148,35 @@ namespace Risk
             }
             else
             {
-                ///Player += 1;
+                Player += 1;
             }
 
+            Turn_Complete_Button.Enabled = false;
+            ButtUpDown1.Enabled = false;
+            ButtUpDown1.Value = 0;
             Next_Player_Button_Click(Turn_Complete_Button, e);
         }
+
+        private void Cancel_butt_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Player_Countries[Player].Count(); i++)
+            {
+                Button_Colour(Player, Player_Countries[Player][i]);
+            }
+            firstbutt = true;
+            secondbutt = false;
+            if (GameState.Text == "Fortifying")
+            {
+                Turn_Complete_Button_Click(Cancel_butt, e);
+            }
+            else
+            {
+                Next_Player_Button_Click(Cancel_butt, e);
+            }
+            
+        }
+
         /// Greys a list of buttons
     }
 }
+
